@@ -1,0 +1,27 @@
+class RangeFreqQuery {
+    HashMap<Integer, TreeMap<Integer, Integer>> map;
+    public RangeFreqQuery(int[] arr) {
+        map = new HashMap<>();
+        for(int i = 0; i < arr.length; ++i)
+        {
+            if(map.get(arr[i]) == null)
+            {
+                map.put(arr[i], new TreeMap<>());
+                map.get(arr[i]).put(-1, 0);
+            }
+            map.get(arr[i]).put(i, map.get(arr[i]).size());
+        }
+    }
+    
+    public int query(int left, int right, int value) {
+        if(map.get(value) == null) return 0;
+
+        Integer lm = map.get(value).lowerKey(left);
+        Integer rm = map.get(value).floorKey(right);
+
+        int l = map.get(value).get(lm);
+        int r = map.get(value).get(rm);
+
+        return r - l;
+    }
+}

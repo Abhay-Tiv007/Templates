@@ -1,0 +1,101 @@
+The idea is that Trie Node will contain the key as <s[i], s[n-i-1]>, i.e. the prefix and suffix character of same word.
+
+https://leetcode.com/problems/count-prefix-and-suffix-pairs-ii/
+
+To check if Trie contains a word that has both suffix and prefix as pref simply check res > 0.
+
+class Node
+{
+    char a, b;
+    int c;
+    List<Node> next = new ArrayList<>();
+    public Node(char a, char b, int c)
+    {
+        this.a = a;
+        this.b = b;
+        this.c = c;
+    }
+
+    public void increment()
+    {
+        this.c++;
+    }
+}
+
+
+class Trie
+{
+    Node root;
+    public Trie()
+    {
+        root = new Node('6', '9', 0);
+    }
+
+    int insert(String s)
+    {
+        Node t = root;
+        int n = s.length();
+        int res = 0;
+        for(int i = 0; i < n; ++i)
+        {
+            char a = s.charAt(i);
+            char b = s.charAt(n - i - 1);
+            boolean f = false;
+            for(var tt : t.next)
+            {
+                if(tt.a == a && tt.b == b)
+                {
+                    t = tt;
+                    res += tt.c;
+                    f = true;
+                    break;
+                }
+            }
+
+            if(!f)
+            {
+                Node node = new Node(a, b, 0);
+                t.next.add(node);
+                t = node;
+            }
+        }
+
+        t.increment();
+
+        return res;
+    }
+
+    boolean containsPrefixSuffix(String s)
+    {
+        Node t = root;
+        int n = s.length();
+        int res = 0;
+        for(int i = 0; i < n; ++i)
+        {
+            char a = s.charAt(i);
+            char b = s.charAt(n - i - 1);
+            boolean f = false;
+            for(var tt : t.next)
+            {
+                if(tt.a == a && tt.b == b)
+                {
+                    t = tt;
+                    res += tt.c;
+                    f = true;
+                    break;
+                }
+            }
+
+            if(!f)
+            {
+                Node node = new Node(a, b, 0);
+                t.next.add(node);
+                t = node;
+            }
+        }
+
+        t.increment();
+
+        return res > 0;
+    }
+}

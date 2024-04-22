@@ -1,0 +1,31 @@
+boolean[][] visited = new boolean[m][n];
+int[][] dir = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+
+Deque<Integer> q = new ArrayDeque<>();
+q.add(i*1000 + j);
+while(q.size() > 0)
+{
+	int l = q.size();
+
+	for(int k = 0; k < l; ++k)
+	{
+		int tn = q.remove();
+
+		int r = tn / 1000;
+		int c = tn % 1000;
+		
+		if(visited[nr][nc]) continue;
+		visited[r][c] = true;
+
+		for(int[] d : dir)
+		{
+			int nr = r + d[0];
+			int nc = c + d[1];
+
+			if(nr >= 0 && nr < m && nc >= 0 && nc < n && !visited[nr][nc] && matrix[nr][nc] == 1)
+			{
+				q.add(nr*1000 + nc);
+			}
+		}
+	}
+}

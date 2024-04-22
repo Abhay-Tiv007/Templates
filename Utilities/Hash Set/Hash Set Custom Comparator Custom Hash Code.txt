@@ -1,0 +1,108 @@
+Hash Set Custom Comparator Custom Hash Code
+
+https://leetcode.com/problems/open-the-lock/?envType=daily-question&envId=2024-04-22
+
+
+class Solution {
+    public int openLock(String[] deadends, String target) {
+        HashSet<Node> set = new HashSet<>();
+        HashSet<Node> visited = new HashSet<>();
+        
+        for(String i : deadends)
+        {
+            set.add(new Node(i));
+        }
+
+        if(set.contains(new Node("0000"))) return -1;
+
+        Node goal = new Node(target);
+
+        Deque<Node> q = new ArrayDeque<>();
+        q.add(new Node("0000"));
+        int lev = 0;
+        while(q.size() > 0)
+        {
+            int len = q.size();
+            for(int j = 0; j < len; ++j)
+            {
+                var node = q.remove();
+                if(visited.contains(node)) continue;
+                if(node.equals(goal)) return lev;
+                visited.add(node);
+
+                for(int i = 0; i < 4; ++i)
+                {
+                    char ch = node.arr[i];
+                    int k = ch - '0';
+
+                    int l = k - 1;
+                    l = k - 1 == -1 ? 9 : l;
+                    node.arr[i] = (char)(l + '0');
+                    if(!set.contains(node)) q.add(new Node(node));
+
+                    int r = k + 1;
+                    r = k + 1 == 10 ? 0 : r;
+                    node.arr[i] = (char)(r + '0');
+                    if(!set.contains(node)) q.add(new Node(node));
+                    
+                    node.arr[i] = ch;
+                }
+            }
+            lev++;
+        }
+        return -1;
+    }
+}
+
+public class Node
+{
+    char[] arr;
+    public Node(String s)
+    {
+        this.arr = new char[4];
+        this.arr[0] = s.charAt(0);
+        this.arr[1] = s.charAt(1);
+        this.arr[2] = s.charAt(2);
+        this.arr[3] = s.charAt(3);
+    }
+
+    public Node(Node n)
+    {
+        this.arr = new char[4];
+        this.arr[0] = n.arr[0];
+        this.arr[1] = n.arr[1];
+        this.arr[2] = n.arr[2];
+        this.arr[3] = n.arr[3];
+    }
+    
+    @Override
+    public String toString()
+    {
+        return new String(arr);
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (o == this) return true;
+        if (!(o instanceof Node)) return false;
+
+        Node tn = (Node)o;
+
+        return     this.arr[0] == tn.arr[0] && this.arr[1] == tn.arr[1] 
+                && this.arr[2] == tn.arr[2] && this.arr[3] == tn.arr[3];
+    }
+
+
+    @Override
+    public int hashCode()
+    {
+        int sum = 0;
+        sum += 1000 * (arr[0] - '0');
+        sum +=  100 * (arr[1] - '0');
+        sum +=   10 * (arr[2] - '0');
+        sum +=    1 * (arr[3] - '0');
+
+        return sum;
+    }
+}

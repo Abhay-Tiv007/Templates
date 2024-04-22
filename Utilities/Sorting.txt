@@ -1,0 +1,31 @@
+Arrays.sort(arr, (a, b) -> Integer.compare(a[0], b[0]));
+
+Lower bound
+int lower_bound(int array[], int l, int r, int key)
+    {
+        int low = l, high = r;
+        int mid;
+ 
+        while (low < high)
+        {
+ 
+            mid = low + (high - low) / 2;
+ 
+            if (key <= array[mid])
+            {
+                high = mid;
+            }
+            else
+            {
+ 
+                low = mid + 1;
+            }
+        }
+ 
+        if (low < array.length && array[low] < key)
+        {
+            low++;
+        }
+ 
+        return low;
+    }

@@ -1,0 +1,64 @@
+# we can use element to index compression for larger values of n(10^9)
+
+class SegmentTreeSum
+{
+    int[] t;
+    int N;
+    public SegmentTreeSum(int n)
+    {
+        t = new int[4 * n];
+        this.N = n;
+    }
+
+    void buildTree(int[] a)
+    {
+        build(a, 1, 0, this.N - 1);
+    }
+
+    void build(int[] a, int v, int tl, int tr)
+    {
+        if(tl == tr)
+        {
+            t[v] = a[tl];
+        }
+        else
+        {
+            int tm = (tl + tr) / 2;
+            build(a, 2*v, tl, tm);
+            build(a, 2*v + 1, tm + 1, tr);
+            t[v] = t[2*v] + t[2*v + 1];
+        }
+    }
+
+    int getSum(int l, int r)
+    {
+        return sumUtil(1, 0, this.N - 1, l, r);
+    }
+
+    int sumUtil(int v, int tl, int tr, int l, int r) {
+        if (l > r)  return 0;
+        if (l == tl && r == tr) return t[v];
+
+        int tm = (tl + tr) / 2;
+
+        return sumUtil(2*v, tl, tm, l, Math.min(r, tm)) + sumUtil(2*v + 1, tm+1, tr, Math.max(l, tm + 1), r);
+    }
+
+    void pointUpdate(int pos, int val)
+    {
+        update(1, 0, this.N - 1, pos, val);
+    }
+
+    void update(int v, int tl, int tr, int pos, int new_val) {
+        if (tl == tr) {
+            t[v] = new_val;		//we can also use t[v] += new_val for incrementing element at index pos by new_val
+        } else {
+            int tm = (tl + tr) / 2;
+            if (pos <= tm)
+                update(v*2, tl, tm, pos, new_val);
+            else
+                update(v*2+1, tm+1, tr, pos, new_val);
+            t[v] = t[v*2] + t[v*2+1];
+        }
+    }
+}

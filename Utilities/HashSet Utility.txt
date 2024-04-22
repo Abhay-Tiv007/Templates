@@ -1,0 +1,11 @@
+HashSet<String> h = new HashSet<>();
+
+h.add("India");
+h.remove("Australia");
+h.contains("Geeks");
+h.size();
+
+for (String s : h)
+	// Traversing elements and printing them
+	System.out.print(s + ", ");
+

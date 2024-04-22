@@ -1,0 +1,93 @@
+Trie Longest Common Prefix Suffix Utility
+
+Solution for String of smallest length(or for largest length change the max condition to min) having Longest common suffix. Just remove the reverse function for prefix queries.
+https://leetcode.com/problems/longest-common-suffix-queries/
+
+
+class Node
+{
+    Node[] child;
+    boolean end;
+    int ind;
+    int max;
+    Node()
+    {
+        child = new Node[26];
+        end = false;
+        ind = 7;
+        max = 1_000_000;
+    }
+}
+
+class Trie 
+{
+    Node root;
+    public Trie()
+    {
+        root = new Node();
+    }
+    
+    public void insert(String word, int pos)
+    {
+        Node t = root;
+        if(t.max > word.length())
+        {
+            t.ind = pos;
+            t.max = word.length();
+        }
+        
+        for(int i = 0; i < word.length(); ++i)
+        {
+            int index = word.charAt(i) - 'a';
+            if(t.child[index] == null)
+            {
+                t.child[index] = new Node();
+            }
+
+            if(t.child[index].max > word.length())
+            {
+                t.child[index].ind = pos;
+                t.child[index].max = word.length();
+            }
+
+            if(t.child[index].max == word.length())
+            {
+                t.child[index].ind = Math.min(t.child[index].ind, pos);
+            }
+
+            t = t.child[index];
+        }
+
+        t.end = true;
+    }
+
+    int longestCommonPrefix(String s)
+    {
+        Node t = root;
+        for(int i = 0; i < s.length(); ++i)
+        {
+            int index = s.charAt(i) - 'a';
+            if(t.child[index] == null)
+            {
+                return t.ind;
+            }
+            t = t.child[index];
+        }
+        return t.ind;
+    }
+
+    int longestCommonPrefixSmallestLength(String s)
+    {
+        Node t = root;
+        for(int i = 0; i < s.length(); ++i)
+        {
+            int index = s.charAt(i) - 'a';
+            if(t.child[index] == null)
+            {
+                return t.max;
+            }
+            t = t.child[index];
+        }
+        return t.max;
+    }
+}

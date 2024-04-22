@@ -1,0 +1,3 @@
+// The Manhattan distance of two points (x1, y1) and (x2, y2) is either |(x1 + y1)−(x2 + y2)| or |(x1 − y1)−(x2 − y2)|
+// whichever is larger.
+// d((x1,y1),(x2,y2)) = max(|(x1+y1)−(x2+y2)|,|(x1−y1)−(x2−y2)|)

@@ -1,0 +1,80 @@
+https://leetcode.com/problems/minimum-time-to-visit-disappearing-nodes/
+
+
+class Solution {
+    public int[] minimumTime(int n, int[][] edges, int[] disappear) {
+        List<List<Node>> g = new ArrayList<>();
+        
+        for(int i = 0; i < n; ++i)
+        {
+            g.add(new ArrayList<>());
+        }
+        
+        
+        for(int i[] : edges)
+        {
+            int u = i[0];
+            int v = i[1];
+            int d = i[2];
+            
+            g.get(u).add(new Node(v, d));
+            g.get(v).add(new Node(u, d));
+        }
+        
+        PriorityQueue<Node> pq = new PriorityQueue<>((a, b) -> a.u - b.u == 0 ? a.d - b.d : a.u - b.u);
+        int[] dist = new int[n];
+        Arrays.fill(dist, Integer.MAX_VALUE);
+ 
+        pq.add(new Node(0, 0));
+        dist[0] = 0;
+        
+        
+        int prev = -1;
+        boolean[] visited = new boolean[n];
+		
+        while (!pq.isEmpty()) {
+            int u = pq.poll().d;
+			
+            if(visited[u]) continue;
+            visited[u] = true;
+            
+            
+            for (Node v : g.get(u)) 
+            {
+				// dist[u] + v.d < disappear[v.u] question specific condition
+                if (dist[v.u] > dist[u] + v.d && dist[u] + v.d < disappear[v.u]) {	
+                    dist[v.u] = dist[u] + v.d;
+                    pq.add(new Node(dist[v.u], v.u));
+                }
+            }
+        }
+        
+        
+        int[] res = new int[n];
+        for (int i = 0; i < n; i++) {
+            if(dist[i] > disappear[i])
+                res[i] = -1;
+            else
+                res[i] = dist[i];
+        }
+        
+        return res;
+    }
+}
+
+
+class Node
+{
+    int u, d;
+    public Node(int u, int d)
+    {
+        this.u = u;
+        this.d = d;
+    }
+    
+    
+    public String toString()
+    {
+        return u + " : " + d;
+    }
+}

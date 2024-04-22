@@ -1,0 +1,35 @@
+https://leetcode.com/problems/shortest-subarray-with-or-at-least-k-ii/
+
+
+// add to prefix bitwise OR
+void incrementBits(int[] bits, int a)
+{
+	for(int i = 0; i <= 31; ++i)
+	{
+		bits[i] += (a>>i) & 1;
+	}
+}
+
+// subtract from prefix bitwise OR
+void decrementBits(int[] bits, int a)
+{
+	for(int i = 0; i <= 31; ++i)
+	{
+		bits[i] -= (a>>i) & 1;
+	}
+}
+
+// return total bitwise OR
+int bitwiseOr(int[] bits)
+{
+	int res = 0;
+	for(int i = 0; i <= 31; ++i)
+	{
+		if(bits[i] >= 1)
+		{
+			res |= (1<<i);
+		}
+	}
+	
+	return res;
+}

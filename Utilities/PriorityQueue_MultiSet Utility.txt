@@ -1,0 +1,19 @@
+PriorityQueue<Integer> pq = new PriorityQueue<Integer>();
+
+pq.add(10);
+pq.remove(10);
+pq.peek();
+pq.poll();
+pq.size();
+pq.toArray();
+pq.contains(10);
+pq.clear();
+
+Reverse PriorityQueue:
+https://www.geeksforgeeks.org/priority-queue-in-reverse-order-in-java/
+
+
+PriorityQueue with key updation
+https://leetcode.com/problems/most-frequent-ids/
+(Note: the set and multiset should be well defined in comparator otherwise the remove function will not work)
+(use multiset if there are multiple keys)

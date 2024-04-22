@@ -1,0 +1,108 @@
+class MultiSet {
+	public TreeMap<Integer, Integer> map;
+	public int size = 0;
+
+	public MultiSet()
+	{
+		map = new TreeMap<>();
+		size = 0;
+	}
+
+	public MultiSet(int[] a)
+	{
+		map = new TreeMap<>();
+		size = a.length;
+		
+		for (int i = 0; i < a.length; i++)
+		{
+			map.put(a[i], map.getOrDefault(a[i], 0) + 1);
+		}
+	}
+
+	void add(int a)
+	{
+		size++;
+		map.put(a, map.getOrDefault(a, 0) + 1);
+	}
+
+	void remove(int a)
+	{
+		size -= map.getOrDefault(a, 0);
+		map.remove(a);
+	}
+	int count(int a)
+	{
+		return map.getOrDefault(a, 0);
+	}
+
+	int ceiling(int a)
+	{
+		if (map.ceilingKey(a) != null)
+		{
+			int find = map.ceilingKey(a);
+			return find;
+		}
+		else
+			return Integer.MIN_VALUE;
+	}
+
+	int floor(int a)
+	{
+		if (map.floorKey(a) != null)
+		{
+			int find = map.floorKey(a);
+			return find;
+		}
+		else
+			return Integer.MAX_VALUE;
+	}
+
+	int lower(int a)
+	{
+		if (map.lowerKey(a) != null)
+		{
+			int find = map.lowerKey(a);
+			return find;
+		}
+		else
+			return Integer.MAX_VALUE;
+	}
+
+	int higher(int a)
+	{
+		if (map.higherKey(a) != null)
+		{
+			int find = map.higherKey(a);
+			return find;
+		}
+		else
+			return Integer.MIN_VALUE;
+	}
+
+	int first()
+	{
+		return map.firstKey();
+	}
+
+	int last()
+	{
+		return map.lastKey();
+	}
+
+	boolean contains(int a)
+	{
+		if (map.containsKey(a))
+			return true;
+		return false;
+	}
+
+	int size() 
+	{
+		return size;
+	}
+
+	void clear() 
+	{
+		map.clear();
+	}
+}
