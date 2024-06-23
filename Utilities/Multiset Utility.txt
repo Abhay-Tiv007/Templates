@@ -32,11 +32,22 @@ class MultiSet {
 		map.put(a, map.getOrDefault(a, 0) + 1);
 	}
 
-	void remove(int a)
+    void remove(int a)
+	{
+        if(map.get(a) == null) return;
+
+		size -= 1;
+		map.put(a, map.get(a) - 1);
+
+        if(map.get(a) <= 0) map.remove(a);
+	}
+
+	void removeAll(int a)
 	{
 		size -= map.getOrDefault(a, 0);
 		map.remove(a);
 	}
+
 	int count(int a)
 	{
 		return map.getOrDefault(a, 0);

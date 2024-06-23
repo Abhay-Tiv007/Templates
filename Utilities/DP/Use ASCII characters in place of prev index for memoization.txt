@@ -1,0 +1,3 @@
+Use ASCII characters in place of prev index for memoization
+
+https://leetcode.com/problems/longest-ideal-subsequence/description/?envType=daily-question&envId=2024-04-25
